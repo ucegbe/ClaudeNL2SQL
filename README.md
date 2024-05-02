@@ -2,13 +2,13 @@
 This is a Streamlit application that allows users to interact with a Redshift database using natural language queries. The app leverages large language models (LLMs) to understand the user's query, generate SQL statements, execute them on the Redshift database, and present the results in a user-friendly manner.
 
 ### Features
-Natural Language Interface: Users can ask questions or provide prompts in natural language, and the app will generate the corresponding SQL queries.
-Redshift Integration: The app connects to a Redshift database cluster and executes the generated SQL queries to retrieve data.
-Result Visualization: Query results are displayed in a tabular format within the Streamlit app.
-Chat Interface: The app provides a chat-like interface for users to interact with the system, making it easy to follow the conversation flow.
-Memory Management: The app keeps track of the conversation history and can rephrase context-dependent questions to make them self-contained.
-Error Handling and Debugging: The app includes error handling and debugging capabilities, leveraging the LLM to suggest SQL query fixes in case of errors.
-Cost Estimation: The app provides an estimate of the cost incurred for using the LLM services (does not include cost of RedShift).
+- Natural Language Interface: Users can ask questions or provide prompts in natural language, and the app will generate the corresponding SQL queries.
+- Redshift Integration: The app connects to a Redshift database cluster and executes the generated SQL queries to retrieve data.
+- Result Visualization: Query results are displayed in a tabular format within the Streamlit app.
+- Chat Interface: The app provides a chat-like interface for users to interact with the system, making it easy to follow the conversation flow.
+- Memory Management: The app keeps track of the conversation history and can rephrase context-dependent questions to make them self-contained.
+- Error Handling and Debugging: The app includes error handling and debugging capabilities, leveraging the LLM to suggest SQL query fixes in case of errors.
+- Cost Estimation: The app provides an estimate of the cost incurred for using the LLM services (does not include cost of RedShift).
 
 ### Pre-Requisites
 1. [Amazon Bedrock Anthropic Claude Model Access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html)
