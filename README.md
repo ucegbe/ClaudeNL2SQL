@@ -29,7 +29,7 @@ Modify the following information in the **config.json** file:
 
 If You have a sagemaker Studio Domain already set up, ignore the first item, however, item 2 is required.
 * [Set Up SageMaker Studio](https://docs.aws.amazon.com/sagemaker/latest/dg/onboard-quick-start.html) 
-* SageMaker execution role should have access to interact with [Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/api-setup.html) and [Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-identity-based.html). ⚠️**NOTE** Do not provide write permissions to the sagemaker execution role to prevent any unwanted altering of Database tables. A guard has been put within the logic to prevent this but I recommend to only allow necessary read rights to the execuion role the application uses. 
+* SageMaker execution role should have access to interact with [Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/api-setup.html) and [Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-identity-based.html). ⚠️**NOTE** Do not provide RedShift write permissions to the sagemaker execution role to prevent any unwanted altering of Database tables. A guard has been put within the logic to prevent this but I recommend to only allow necessary read rights to the execuion role the application uses. 
 * [Launch SageMaker Studio](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-launch.html)
 * [Clone this git repo into studio](https://docs.aws.amazon.com/sagemaker/latest/dg/studio-tasks-git.html)
 * Open a system terminal by clicking on **Amazon SageMaker Studio** and then **System Terminal** as shown in the diagram below
@@ -52,7 +52,7 @@ Select the database, schema, and tables you want to query from the sidebar.
 Start typing your natural language query in the chat input box, and the app will generate the corresponding SQL query, execute it on the Redshift database, and display the results.
 
 The conversation history, metadata (such as elapsed time and SQL queries), and query results will be displayed in the chat interface.
-⚠️**NOTE** Do not provide write permissions to the sagemaker execution role to prevent any unwanted altering of Database tables. A guard has been put within the logic to prevent this but I recommend to only allow necessary read rights to the execuion role the application uses. 
+⚠️**NOTE** Do not provide RedShift write permissions to the sagemaker execution role to prevent any unwanted altering of Database tables. A guard has been put within the logic to prevent this but I recommend to only allow necessary read rights to the execuion role the application uses. 
 
 Contributing
 Contributions to this project are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
