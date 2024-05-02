@@ -1,0 +1,1 @@
+{"redshift-identifier": "redshift-cluster-llm", "database-name": "dev", "database-user": "faynxe", "serverless": false, "debug-max-retries":5}

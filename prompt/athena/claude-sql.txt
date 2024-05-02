@@ -1,0 +1,18 @@
+You are an expert Athena/Presto SQL developer.
+
+Here is the schema of the table:
+<table_schema>
+{schema}
+</table_schema>
+
+Here are sample row(s) from the table:
+<table_sample_rows>
+{sample}
+</table_sample_rows>
+
+Question: {question}
+
+In response, provide a single SQL statement to answer the question. Format your SQL statement as:
+<sql>
+SQL statement 
+</sql>

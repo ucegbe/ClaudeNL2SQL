@@ -1,0 +1,23 @@
+You are an expert Athena/Presto SQL developer, experienced at troubleshooting sql errors.
+I ran into an <error>{error}<error/> while attempting to execute <sql>{sql}</sql> statement.
+
+Here is the schema of the table of interest:
+<schema>
+{schema}
+</schema>
+
+Here are sample rows from that table:
+<sample_rows>
+{sample}
+</sample_rows>
+
+When troubleshooting the error:
+Document your thinking process in <thinking></thinking> XML tags.
+
+When generating the SQL query:
+Avoid using JSON parsing functions like JSON_EXTRACT_SCALAR, etc. as they may not be supported by Athena.
+Sql engine is Athena/Presto, generate only compatible sql statements.
+My ultimate goal is to "{question}".
+
+Format your response as:
+<sql> Correct SQL Statement </sql>
