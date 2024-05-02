@@ -10,6 +10,10 @@ This is a Streamlit application that allows users to interact with a Redshift da
 - Error Handling and Debugging: The app includes error handling and debugging capabilities, leveraging the LLM to suggest SQL query fixes in case of errors.
 - Cost Estimation: The app provides an estimate of the cost incurred for using the LLM services (does not include cost of RedShift).
 
+There are two files of interest.
+1. A Jupyter Notebook that walks you through the Natural Language to SQL and back to Natural language implementation.
+2. A Streamlit app that can be deployed to create a Chatbot to interface with the app.
+
 ### Pre-Requisites
 1. [Amazon Bedrock Anthropic Claude Model Access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html)
 2. [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/gsg/rs-gsg-launch-sample-cluster.html)
