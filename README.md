@@ -21,11 +21,11 @@ This is a Streamlit application that allows users to interact with a Redshift da
 Configuration
 Modify the following information in the **config.json** file:
 
-`redshift-identifier`: Identifier of the redshift cluster
-`database-name`: Redshift Database name
-`database-user`: Redshift Admin user name
-`serverless`: Boolean whether the Redshift Cluster is serverless or not (JSON booleans are all lower case eg."true" and not "True")
-`debug-max-retries`: Max number of iterations for LLM self-correction
+- `redshift-identifier`: Identifier of the redshift cluster
+- `database-name`: Redshift Database name
+- `database-user`: Redshift Admin user name
+- `serverless`: Boolean whether the Redshift Cluster is serverless or not (JSON booleans are all lower case eg."true" and not "True")
+- `debug-max-retries`: Max number of iterations for LLM self-correction
 
 If You have a sagemaker Studio Domain already set up, ignore the first item, however, item 2 is required.
 * [Set Up SageMaker Studio](https://docs.aws.amazon.com/sagemaker/latest/dg/onboard-quick-start.html) 
