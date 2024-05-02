@@ -16,7 +16,7 @@ Cost Estimation: The app provides an estimate of the cost incurred for using the
 
 ## To run this Streamlit App on Sagemaker Studio follow the steps below:
 
-<img src="images/chat-preview.JPG" width="800"/>
+<img src="images/nl2sqll.JPG" width="800"/>
 
 Configuration
 Modify the following information in the **config.json** file:
