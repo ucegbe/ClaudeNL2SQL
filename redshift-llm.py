@@ -166,12 +166,14 @@ def execute_query_with_pagination( sql_query, identifier, database,  serverless,
          Id=response_b['Id'],
     )       
     status=describe_b['Status']
-    while status != "FINISHED":
+    while status not in ["FINISHED","FAILED"]:
         time.sleep(1)
         describe_b=REDSHIFT.describe_statement(
                          Id=response_b['Id'],
                     ) 
         status=describe_b['Status']
+
+
     max_attempts = 5 
     attempts = 0
     while attempts < max_attempts:
@@ -297,16 +299,16 @@ def redshift_qna(params,stream_handler=None):
         sql2=[]
         for table in params['tables']:
             sql2.append(f"SELECT * from {params['db']}.{params['db_schema']}.{table} LIMIT 10")
-        sqls=[sql1]+sql2        
-        # st.write(sqls)
+        sqls=[sql1]+sql2  
         question=params['prompt']
         results=execute_query_with_pagination(sqls, CLUSTER_IDENTIFIER, params['db'], params['serverless'],DB_USER)    
         col_names=results[0].split('\n')[0]
         observations="\n".join(sorted(results[0].split('\n')[1:])).strip()
         params['schema']=f"{col_names}\n{observations}"
+
         params['sample']=''
-        for examples in results[1:]:
-            params['sample']+=f"{examples}\n\n"
+        for ids,examples in enumerate(results[1:]):
+            params['sample']+=f"<{params['tables'][ids]}_table>\n{examples}</{params['tables'][ids]}_table>\n"
     elif "table" in params:
         sql1=f"SELECT * FROM information_schema.columns WHERE table_name='{params['table']}' AND table_schema='{params['db_schema']}'"
         sql2=f"SELECT * from {params['db']}.{params['db_schema']}.{params['table']} LIMIT 10"
@@ -315,7 +317,7 @@ def redshift_qna(params,stream_handler=None):
         results=execute_query_with_pagination(sqls, CLUSTER_IDENTIFIER, params['db'],params['serverless'], DB_USER)    
         params['schema']=results[0]
         params['sample']=results[1]
-    model="claude" if "claude" in params["sql_model"].lower() else "mixtral"
+    model="claude"
     with open(f"{prompt_path}/{params['engine']}/{model}-sql.txt","r") as f:
         prompts=f.read()
     values = {
@@ -328,19 +330,19 @@ def redshift_qna(params,stream_handler=None):
     sql_pattern = re.compile(r'<sql>(.*?)(?:</sql>|$)', re.DOTALL)           
     sql_match = re.search(sql_pattern, q_s)
     q_s = sql_match.group(1)
-    
     if any(keyword in q_s for keyword in ["CREATE", "DROP", "ALTER","INSERT","UPDATE","TRUNCATE","DELETE","MERGE","REPLACE","UPSERT"]):
         output="I AM NOT PERMITTED TO MODIFY THIS TABLE, CONTACT ADMIN."
+        
     else:    
         output, q_s=single_execute_query(params,q_s, CLUSTER_IDENTIFIER, params['db'] ,question,params['serverless'],DB_USER)    
-    input_token=CLAUDE.count_tokens(output) if "claude" in params['model_id'].lower() else mistral_counter("mistralai/Mixtral-8x7B-v0.1").encode(output)
-    if ("claude" in params['model_id'].lower() and input_token>90000) or ("claude" not in params['model_id'].lower() and len(input_token)>28000):    
+    input_token=CLAUDE.count_tokens(output)
+    if input_token>180000:    
         csv_rows=output.split('\n')
         st.write("TOKEN TOO LARGE, CHUNKING...")
-        chunk_rows=chunk_csv_rows(csv_rows, max_token_per_chunk=80000 if "claude" in params['model_id'].lower() else 20000)
+        chunk_rows=chunk_csv_rows(csv_rows, max_token_per_chunk=90000)
         initial_summary=[]
         for chunk in chunk_rows:            
-            model="claude" if "claude" in params['model_id'].lower() else "mixtral"
+            model="claude" 
             with open(f"{prompt_path}/{params['engine']}/{model}-text-gen.txt","r") as f:
                 prompts=f.read()
             values = {   
@@ -360,12 +362,10 @@ Here is a list of answers from multiple subset of a table for a given question:
 </multiple_answers>
 Here is the given question:
 {question}
-Your job is to merge the multiple answers into a coherent single answer.'''
-        if "claude" == model:
-            prompts=f"\n\nHuman:\n{prompts}\n\nAssistant:"
+Your job is to merge the multiple answers into a coherent single answer.'''        
         response=summary_llm(prompts, params, stream_handler)     
     else:        
-        model="claude" if "claude" in params['model_id'].lower() else "mixtral"
+        model="claude"
         with open(f"{prompt_path}/{params['engine']}/{model}-text-gen.txt","r") as f:
             prompts=f.read()
         values = {   
